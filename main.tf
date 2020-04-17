@@ -10,20 +10,20 @@ resource "random_password" "password" {
 }
 
 resource "azurerm_resource_group" "minecraft" {
-  name     = "hashicraft2"
+  name     = "hasicrafttest"
   location = "West Europe"
 }
 
 resource "azurerm_container_group" "minecraft" {
-  name                = "minecraft-server"
+  name                = "minecraft"
   location            = azurerm_resource_group.minecraft.location
   resource_group_name = azurerm_resource_group.minecraft.name
   ip_address_type     = "public"
-  dns_name_label      = "tfdemohs"
+  dns_name_label      = "hashicrafttf"
   os_type             = "Linux"
 
   container {
-    name = "server"
+    name   = "studio"
     image = "hashicraft/minecraft:v1.12.2"
     cpu = "0.5"
     memory = "1"
@@ -32,23 +32,17 @@ resource "azurerm_container_group" "minecraft" {
     ports {
       port     = 25565
       protocol = "TCP"
-    }
+    } 
 
-    # RCon server port 
-    ports {
-      port     = 27015
-      protocol = "TCP"
-    }
-
-     environment_variables = {
+    environment_variables = {
+      JAVA_MEMORY="1G",
       MINECRAFT_MOTD="HashiCraft",
       MINECRAFT_WHITELIST_ENABLED=true,
-      MINECRAFT_RCON_ENABLED=true
+      MINECRAFT_RCON_ENABLED=true,
       MINECRAFT_RCON_PASSWORD=random_password.password.result
-     }
+    }
   }
-
-  }
+}
 
 output "fqdn" {
   value = azurerm_container_group.minecraft.fqdn
