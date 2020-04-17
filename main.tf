@@ -37,9 +37,9 @@ resource "azurerm_container_group" "minecraft" {
     environment_variables = {
       JAVA_MEMORY="1G",
       MINECRAFT_MOTD="HashiCraft",
-      MINECRAFT_WHITELIST_ENABLED=true,
-      MINECRAFT_RCON_ENABLED=true,
-      MINECRAFT_RCON_PASSWORD=random_password.password.result
+      WHITELIST_ENABLED=true,
+      RCON_ENABLED=true,
+      RCON_PASSWORD=random_password.password.result
     }
   }
 }
