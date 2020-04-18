@@ -14,6 +14,8 @@ export ARM_SUBSCRIPTION_ID="xxxx-xxxx-xxxx-x-xxx"
 export ARM_TENANT_ID="xxxx-xxx-x-xx-xxxx"
 ```
 
+[https://youtu.be/zL4Xt7CyuDE?t=275](https://youtu.be/zL4Xt7CyuDE?t=275)
+
 Once you have set your credentials as environment variables you can run the `terraform init` command to download any required providers and setup Terraform.
 
 ```
@@ -25,6 +27,8 @@ Initializing provider plugins...
 - Checking for available provider plugins...
 - Downloading plugin for provider "azurerm" (hashicorp/azurerm) 2.5.0...
 ```
+
+[https://youtu.be/zL4Xt7CyuDE?t=482](https://youtu.be/zL4Xt7CyuDE?t=482)
 
 ## Run a plan
 
@@ -50,6 +54,8 @@ Terraform will perform the following actions:
       + dns_name_label      = "tfdemohs"
 ```
 
+[https://youtu.be/zL4Xt7CyuDE](https://youtu.be/zL4Xt7CyuDE)
+
 ## Apply changes
 
 If you are happy that the plan is what you need then the next step is to apply the changes and create the resources.
@@ -74,6 +80,8 @@ Outputs:
 
 fqdn = tfdemohs.westeurope.azurecontainer.io
 ```
+
+[https://youtu.be/zL4Xt7CyuDE?t=559](https://youtu.be/zL4Xt7CyuDE?t=559)
 
 ## Accessing the Minecraft server
 Your new Minecraft server is running on the internet and is accessible using the `FQDN` output from terraform and the port `25565`. For if the FQDN is `tfdemohs.westeurope.azurecontainer.io` you can the server in your minecraft application `tfdemohs.westeurope.azurecontainer.io:25565`.
@@ -102,6 +110,8 @@ If all is successful you should now be able to log into the remote server
 
 ![](./images/mine_3.png)
 
+[https://youtu.be/zL4Xt7CyuDE?t=1634](https://youtu.be/zL4Xt7CyuDE?t=1634)
+
 ## Cleaning up
 
 To delete the server you can use the `terraform destroy` command. `terraform destroy` will remove any of the resources that you defined in the config.
@@ -125,6 +135,8 @@ azurerm_resource_group.minecraft: Destruction complete after 46s
 
 Destroy complete! Resources: 3 destroyed.
 ```
+
+[https://youtu.be/zL4Xt7CyuDE?t=1789](https://youtu.be/zL4Xt7CyuDE?t=1789)
 
 ## Note
 This repository runs Terraform in local mode, local mode writes the Terraform state to the local disk using the files `terraform.tfstate` and `terraform.tfstate.backup`. These files can contain secret information such as usernames and passwords and should NOT be uploaded to a public GitHub repository.
