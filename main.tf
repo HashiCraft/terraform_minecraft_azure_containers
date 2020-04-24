@@ -18,7 +18,6 @@ resource "azurerm_storage_account" "minecraft" {
   name                     = "hashicrafttf"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
-
   account_tier             = "Standard"
   account_replication_type = "GRS"
 
@@ -28,9 +27,15 @@ resource "azurerm_storage_account" "minecraft" {
 }
 
 resource "azurerm_storage_share" "minecraft_world" {
-  name                 = "world"
+  name = "world"
   storage_account_name = azurerm_storage_account.minecraft.name
-  quota                = 50
+  quota = 50
+}
+
+resource "azurerm_storage_share" "minecraft_config" {
+  name                 = "config"
+  storage_account_name = azurerm_storage_account.minecraft.name
+  quota                = 1
 }
 
 resource "azurerm_container_group" "minecraft" {
@@ -59,6 +64,14 @@ resource "azurerm_container_group" "minecraft" {
       storage_account_name = azurerm_storage_account.minecraft.name
       storage_account_key = azurerm_storage_account.minecraft.primary_access_key
       share_name = azurerm_storage_share.minecraft_world.name  
+    }
+
+    volume {
+      name = "config"
+      mount_path = "/minecraft/config"
+      storage_account_name = azurerm_storage_account.minecraft.name
+      storage_account_key = azurerm_storage_account.minecraft.primary_access_key
+      share_name = azurerm_storage_share.minecraft_config.name  
     }
 
     environment_variables = {
