@@ -49,7 +49,7 @@ resource "azurerm_container_group" "minecraft" {
   container {
     name   = "studio"
     image = "hashicraft/minecraft:v1.12.2"
-    cpu = "0.5"
+    cpu = "1"
     memory = "1"
 
     # Main minecraft port
