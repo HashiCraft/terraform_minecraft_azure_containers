@@ -89,6 +89,7 @@ resource "azurerm_container_group" "minecraft" {
       JAVA_MEMORY="1G",
       MINECRAFT_MOTD="HashiCraft",
       RESOURCE_PACK="https://github.com/HashiCraft/terraform_minecraft_azure_containers/releases/download/files/KawaiiWorld1.12.zip",
+      WORLD_BACKUP="https://github.com/HashiCraft/terraform_minecraft_azure_containers/releases/download/files/example_world.tar.gz",
       WHITELIST_ENABLED=true,
       RCON_ENABLED=true,
       RCON_PASSWORD=random_password.password.result
