@@ -20,13 +20,17 @@ resource "random_password" "password" {
   override_special = "_%@"
 }
 
+locals {
+  local_env = terraform.workspace == "default" ? var.environment : terraform.workspace
+}
+
 resource "azurerm_resource_group" "minecraft" {
-  name     = "hasicrafttest-${terraform.workspace}"
+  name     = "hasicrafttest_${local.local_env}"
   location = "West Europe"
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = "hashicrafttf-${terraform.workspace}"
+  name                     = "hashicrafttf${local.local_env}"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
