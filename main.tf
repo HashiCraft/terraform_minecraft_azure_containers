@@ -9,7 +9,7 @@ terraform {
     organization = "HashiCraft"
 
     workspaces {
-      name = "terraform_minecraft_azure_containers"
+      prefix = "terraform_minecraft_azure_containers_"
     }
   }
 }
@@ -20,13 +20,23 @@ resource "random_password" "password" {
   override_special = "_%@"
 }
 
+variable "environment" {
+  default = "dev"
+}
+
+locals {
+  environment = terraform.workspace == "default" ? var.environment : terraform.workspace
+  resource_group_name = local.environment == "master" ? "" : "_${local.environment}"
+  storage_account_name = local.environment == "master" ? "" : "${local.environment}"
+}
+
 resource "azurerm_resource_group" "minecraft" {
-  name     = "hasicrafttest"
+  name     = "hasicrafttest${local.resource_group_name}"
   location = "West Europe"
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = "hashicrafttf"
+  name                     = "hashicrafttf${local.storage_account_name}"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
@@ -54,7 +64,7 @@ resource "azurerm_container_group" "minecraft" {
   location            = azurerm_resource_group.minecraft.location
   resource_group_name = azurerm_resource_group.minecraft.name
   ip_address_type     = "public"
-  dns_name_label      = "hashicrafttf"
+  dns_name_label      = "hashicrafttf${local.storage_account_name}"
   os_type             = "Linux"
 
   container {
