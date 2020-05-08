@@ -9,7 +9,7 @@ terraform {
     organization = "HashiCraft"
 
     workspaces {
-      name = "terraform_minecraft_azure_containers"
+      prefix = "terraform_minecraft_azure_containers-"
     }
   }
 }
@@ -21,12 +21,12 @@ resource "random_password" "password" {
 }
 
 resource "azurerm_resource_group" "minecraft" {
-  name     = "hasicrafttest"
+  name     = "hasicrafttest-${terraform.workspace}"
   location = "West Europe"
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = "hashicrafttf"
+  name                     = "hashicrafttf-${terraform.workspace}"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
