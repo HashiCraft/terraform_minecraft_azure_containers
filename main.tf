@@ -64,7 +64,7 @@ resource "azurerm_container_group" "minecraft" {
   location            = azurerm_resource_group.minecraft.location
   resource_group_name = azurerm_resource_group.minecraft.name
   ip_address_type     = "public"
-  dns_name_label      = "hashicrafttf"
+  dns_name_label      = "hashicrafttf${local.storage_account_name}"
   os_type             = "Linux"
 
   container {
