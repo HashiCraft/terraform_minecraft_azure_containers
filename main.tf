@@ -24,19 +24,13 @@ variable "environment" {
   default = "dev"
 }
 
-locals {
-  environment = terraform.workspace == "default" ? var.environment : terraform.workspace
-  resource_group_name = local.environment == "master" ? "" : "_${local.environment}"
-  storage_account_name = local.environment == "master" ? "" : "${local.environment}"
-}
-
 resource "azurerm_resource_group" "minecraft" {
-  name     = "hasicrafttest${local.resource_group_name}"
+  name     = "hasicrafttest${var.environment == "master" ? "" : var.environment}"
   location = "West Europe"
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = "hashicrafttf${local.storage_account_name}"
+  name                     = "hashicrafttf${var.environment == "master" ? "" : var.environment}"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
@@ -64,7 +58,7 @@ resource "azurerm_container_group" "minecraft" {
   location            = azurerm_resource_group.minecraft.location
   resource_group_name = azurerm_resource_group.minecraft.name
   ip_address_type     = "public"
-  dns_name_label      = "hashicrafttf${local.storage_account_name}"
+  dns_name_label      = "hashicrafttf${var.environment == "master" ? "" : var.environment}"
   os_type             = "Linux"
 
   container {
