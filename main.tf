@@ -3,6 +3,17 @@ provider "azurerm" {
   features {}
 }
 
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "HashiCraft"
+
+    workspaces {
+      name = "terraform_minecraft_azure_containers"
+    }
+  }
+}
+
 resource "random_password" "password" {
   length = 16
   special = true
