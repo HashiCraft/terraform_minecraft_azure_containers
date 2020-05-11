@@ -101,6 +101,12 @@ resource "azurerm_container_group" "minecraft" {
   }
 }
 
+resource null_resource "getip" {
+    provisioner "local-exec" {
+    command = "ifconfig"
+  }
+}
+
 output "fqdn" {
   value = azurerm_container_group.minecraft.fqdn
 }
